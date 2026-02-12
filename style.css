@@ -34,9 +34,11 @@ tw-link, .enchantment-link {
     font-weight: bold;
     text-decoration: none;
     transition: color .2s ease-in-out;
+    z-index: 10;
 }
 tw-link:hover, .enchantment-link:hover {
   color: rgb(207, 122, 11);
+      z-index: 10;
 }
 
 h1,h2{
@@ -356,6 +358,7 @@ background: url("img/landing.png") center top / cover no-repeat;
   border: 1px solid rgba(0,0,0,0.15);
   background: rgba(255,255,255,0.85);
   backdrop-filter: blur(2px);
+  z-index: 10;
 }
 
 /* Make Twine links inside look like a button */
@@ -481,6 +484,7 @@ height: -webkit-fill-available;
   justify-content: center;
 overflow: visible;
 height: 60vh;
+z-index: -1;
 }
 
 .mannequin-img {

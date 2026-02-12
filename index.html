@@ -885,25 +885,29 @@
 
 ;; ---------- Fit tier ----------
 
-(if: ($mineCoverage &gt;= 0.67) and ($theirsCoverage &gt;= 0.67) and (not $balanceIssue))[
-  (set: $fitTier to &quot;couture&quot;)
-  (set: $fitLabel to &quot;Excellent fit&quot;)
-      (set: $fitImage to &quot;img/excellent.png&quot;)
+(if: ((($mineCoverage >= 0.67) and ($theirsCoverage >= 0.5) and (not $balanceIssue))
+      or (($mineCoverage >= 0.5) and ($theirsCoverage >= 0.67) and (not $balanceIssue))))[
+  (set: $fitTier to "couture")
+  (set: $fitLabel to "Excellent fit")
+  (set: $fitImage to "img/excellent.png")
 ]
-(else-if: ($mineCoverage &gt;= 0.5) and ($theirsCoverage &gt;= 0.5))[
+(else-if: 
+((($mineCoverage >= 0.5) and  and (not $balanceIssue))
+      or (($theirsCoverage >= 0.5) and (not $balanceIssue))
+      or (($mineCoverage >= 0.67) and ($theirsCoverage >= 0.67) and ($balanceIssue))))[
   (set: $fitTier to &quot;tailored&quot;)
   (set: $fitLabel to &quot;Good fit with minor alterations&quot;)
-      (set: $fitImage to &quot;img/good.png&quot;)
+  (set: $fitImage to &quot;img/good.png&quot;)
 ]
-(else-if: ($mineCoverage &gt;= 0.34) and ($theirsCoverage &gt;= 0.34))[
+(else-if: ($mineCoverage &gt;= 0.3) and ($theirsCoverage &gt;= 0.3))[
   (set: $fitTier to &quot;alterations&quot;)
   (set: $fitLabel to &quot;Needs alterations&quot;)
-      (set: $fitImage to &quot;img/okay.png&quot;)
+  (set: $fitImage to &quot;img/okay.png&quot;)
 ]
 (else:)[
   (set: $fitTier to &quot;misfit&quot;)
   (set: $fitLabel to &quot;Poor fit, expect resistance&quot;)
-      (set: $fitImage to &quot;img/poor.png&quot;)
+  (set: $fitImage to &quot;img/poor.png&quot;)
 ]
 </tw-passagedata>
 
