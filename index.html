@@ -885,30 +885,71 @@
 
 ;; ---------- Fit tier ----------
 
-(if: ((($mineCoverage >= 0.67) and ($theirsCoverage >= 0.5) and (not $balanceIssue))
-      or (($mineCoverage >= 0.5) and ($theirsCoverage >= 0.67) and (not $balanceIssue))))[
+;; Couture: strong on both sides, but allows asymmetry (2/3 vs 1/2) as long as balanced
+(if: (
+        (
+          ($mineCoverage >= 0.67) and
+          ($theirsCoverage >= 0.50) and
+          (not $balanceIssue)
+        )
+        or
+        (
+          ($mineCoverage >= 0.50) and
+          ($theirsCoverage >= 0.67) and
+          (not $balanceIssue)
+        )
+     )
+)[
   (set: $fitTier to "couture")
   (set: $fitLabel to "Excellent fit")
   (set: $fitImage to "img/excellent.png")
 ]
-(else-if: 
-((($mineCoverage >= 0.5) and  and (not $balanceIssue))
-      or (($theirsCoverage >= 0.5) and (not $balanceIssue))
-      or (($mineCoverage >= 0.67) and ($theirsCoverage >= 0.67) and ($balanceIssue))))[
-  (set: $fitTier to &quot;tailored&quot;)
-  (set: $fitLabel to &quot;Good fit with minor alterations&quot;)
-  (set: $fitImage to &quot;img/good.png&quot;)
+
+;; Tailored: decent coverage on both sides OR very high on both but with balance warning
+(else-if: (
+            (
+              ($mineCoverage >= 0.50) and
+              ($theirsCoverage >= 0.50) and
+              (not $balanceIssue)
+            )
+            or
+            (
+              ($mineCoverage >= 0.67) and
+              ($theirsCoverage >= 0.67) and
+              ($balanceIssue is true)
+            )
+         )
+)[
+  (set: $fitTier to "tailored")
+  (set: $fitLabel to "Good fit with minor alterations")
+  (set: $fitImage to "img/good.png")
 ]
-(else-if: ($mineCoverage &gt;= 0.3) and ($theirsCoverage &gt;= 0.3))[
-  (set: $fitTier to &quot;alterations&quot;)
-  (set: $fitLabel to &quot;Needs alterations&quot;)
-  (set: $fitImage to &quot;img/okay.png&quot;)
+
+;; Alterations: workable starter but not close to landing
+(else-if: (
+            (
+              ($mineCoverage >= 0.3) and
+              ($theirsCoverage >= 0.50)
+            )
+            or
+            (
+              ($mineCoverage >= 0.50) and
+              ($theirsCoverage >= 0.3)
+            )
+         )
+)[
+  (set: $fitTier to "alterations")
+  (set: $fitLabel to "Needs alterations")
+  (set: $fitImage to "img/okay.png")
 ]
+
+;; Misfit: low coverage on at least one side
 (else:)[
-  (set: $fitTier to &quot;misfit&quot;)
-  (set: $fitLabel to &quot;Poor fit, expect resistance&quot;)
-  (set: $fitImage to &quot;img/poor.png&quot;)
+  (set: $fitTier to "misfit")
+  (set: $fitLabel to "Poor fit, expect resistance")
+  (set: $fitImage to "img/poor.png")
 ]
+
 </tw-passagedata>
 
 
