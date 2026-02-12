@@ -430,6 +430,7 @@ background: url("img/landing.png") center top / cover no-repeat;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
   align-items: start;
+  z-index: 10px;
 }
 
 .polaroid{
@@ -484,7 +485,7 @@ height: -webkit-fill-available;
   justify-content: center;
 overflow: visible;
 height: 60vh;
-z-index: -1;
+/* z-index: -1; */
 }
 
 .mannequin-img {
@@ -499,6 +500,7 @@ z-index: -1;
   }
   .polaroid-grid{
     grid-template-columns: 1fr;
+    z-index: 10;
   }
   .mannequin-panel{
     height: 240px;
